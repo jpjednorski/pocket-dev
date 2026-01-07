@@ -12,6 +12,7 @@ fi
 
 eval "$(~/.local/bin/mise activate zsh)"
 
+export PATH="$HOME/.opencode/bin:$HOME/.local/bin:$PATH"
 export EDITOR="vim"
 export VISUAL="vim"
 

@@ -18,6 +18,7 @@ if ! has_cmd claude; then
 fi
 
 log_step "Installing OpenCode (oh-my-opencode)..."
+export PATH="$USER_HOME/.opencode/bin:$PATH"
 if ! has_cmd opencode; then
     curl -fsSL https://opencode.ai/install | bash
 fi
