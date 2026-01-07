@@ -37,17 +37,14 @@ Recommended: [Hetzner](https://www.hetzner.com/cloud) CCX33 (8 vCPU, 32GB RAM) -
 SSH into your VPS and run the one-liner:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/pocket-dev/main/install.sh | \
-  POCKET_DEV_REPO=https://github.com/YOUR_USERNAME/pocket-dev.git \
-  TAILSCALE_AUTH_KEY=tskey-auth-xxxxx \
-  NTFY_TOPIC=pocket-dev-your-secret-topic \
-  bash
+curl -fsSL https://raw.githubusercontent.com/jpjednorski/pocket-dev/master/install.sh | \
+  TAILSCALE_AUTH_KEY=tskey-auth-xxxxx NTFY_TOPIC=pocket-dev-your-secret-topic bash
 ```
 
 Or clone first if you prefer:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/pocket-dev ~/.pocket-dev
+git clone https://github.com/jpjednorski/pocket-dev ~/.pocket-dev
 cd ~/.pocket-dev
 cp .env.example .env
 # edit .env with your keys

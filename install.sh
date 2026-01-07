@@ -2,7 +2,7 @@
 # pocket-dev installer
 #
 # One-liner install (from fresh VPS):
-#   curl -fsSL https://raw.githubusercontent.com/YOUR_USER/pocket-dev/main/install.sh | \
+#   curl -fsSL https://raw.githubusercontent.com/jpjednorski/pocket-dev/master/install.sh | \
 #     TAILSCALE_AUTH_KEY=tskey-xxx NTFY_TOPIC=my-secret-topic bash
 #
 # Or clone first:
@@ -18,9 +18,7 @@ BLUE='\033[0;34m'
 BOLD='\033[1m'
 NC='\033[0m'
 
-# === CONFIGURATION ===
-# Set this to your GitHub repo URL
-REPO_URL="${POCKET_DEV_REPO:-https://github.com/YOUR_USER/pocket-dev.git}"
+REPO_URL="${POCKET_DEV_REPO:-https://github.com/jpjednorski/pocket-dev.git}"
 INSTALL_DIR="${POCKET_DEV_DIR:-$HOME/.pocket-dev}"
 
 echo ""
