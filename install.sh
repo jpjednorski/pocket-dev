@@ -8,9 +8,8 @@
 # Or clone first:
 #   git clone <repo> ~/.pocket-dev && cd ~/.pocket-dev && ./install.sh
 
-set -euo pipefail
+set -eo pipefail
 
-# Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
@@ -27,11 +26,12 @@ echo -e "${BLUE}${BOLD}║          📱 pocket-dev installer       ║${NC}"
 echo -e "${BLUE}${BOLD}╚════════════════════════════════════════╝${NC}"
 echo ""
 
-# Detect if we're running from a cloned repo or via curl
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}" 2>/dev/null)" && pwd 2>/dev/null)" || SCRIPT_DIR=""
+SCRIPT_DIR=""
+if [[ -n "${BASH_SOURCE[0]:-}" ]]; then
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd 2>/dev/null)" || SCRIPT_DIR=""
+fi
 
 if [[ -n "$SCRIPT_DIR" && -f "$SCRIPT_DIR/justfile" ]]; then
-    # Running from cloned repo
     echo -e "${GREEN}▸${NC} Running from cloned repository"
     INSTALL_DIR="$SCRIPT_DIR"
 else
@@ -127,26 +127,14 @@ if [[ -z "${NTFY_TOPIC:-}" ]]; then
     exit 1
 fi
 
-# Install just if needed
 if ! command -v just &>/dev/null; then
     echo -e "${BLUE}▸${NC} Installing just..."
-    
-    # Detect architecture
-    ARCH=$(uname -m)
-    case "$ARCH" in
-        x86_64) ARCH="x86_64" ;;
-        aarch64|arm64) ARCH="aarch64" ;;
-        *) echo "Unsupported architecture: $ARCH"; exit 1 ;;
-    esac
-    
-    # Install just
     curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to /usr/local/bin 2>/dev/null || {
-        # Fallback: install to user directory
         mkdir -p "$HOME/.local/bin"
         curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to "$HOME/.local/bin"
         export PATH="$HOME/.local/bin:$PATH"
     }
 fi
 
-# Run installation
+cd "$INSTALL_DIR"
 just install
