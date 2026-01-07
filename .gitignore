@@ -1,0 +1,5 @@
+.env
+repos.txt
+*.log
+*.bak
+.DS_Store
