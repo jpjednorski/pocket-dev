@@ -4,7 +4,7 @@
 set dotenv-load
 set shell := ["bash", "-cu"]
 
-export POCKET_DEV_DIR := env_var_or_default("POCKET_DEV_DIR", "~/.pocket-dev")
+export POCKET_DEV_DIR := justfile_directory()
 
 # Default: show help
 default:
@@ -18,7 +18,7 @@ default:
 install:
     #!/usr/bin/env bash
     set -euo pipefail
-    cd "$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+    cd "{{ justfile_directory() }}"
     
     echo "🚀 Starting pocket-dev installation..."
     echo ""
@@ -93,7 +93,7 @@ test-notify:
 update:
     #!/usr/bin/env bash
     set -euo pipefail
-    cd "$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+    cd "{{ justfile_directory() }}"
     git pull --rebase
     just install
 
