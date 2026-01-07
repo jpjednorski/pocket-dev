@@ -49,7 +49,7 @@ echo ""
 log_step "Claude Code Authentication"
 log_info "This will open a browser for OAuth..."
 if has_cmd claude; then
-    claude login || log_warn "Claude login skipped or failed"
+    claude login < /dev/null || log_warn "Claude login skipped or failed"
 else
     log_warn "Claude not installed"
 fi
@@ -57,7 +57,7 @@ fi
 echo ""
 log_step "OpenCode Authentication"
 if has_cmd opencode; then
-    opencode auth || log_warn "OpenCode auth skipped or failed"
+    opencode auth < /dev/null || log_warn "OpenCode auth skipped or failed"
 else
     log_warn "OpenCode not installed"
 fi
