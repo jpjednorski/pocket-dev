@@ -47,5 +47,20 @@ if [[ -f "$POCKET_DEV_DIR/dotfiles/.config/opencode/config.toml" ]]; then
 fi
 chown -R "$CURRENT_USER:$CURRENT_USER" "$OPENCODE_DIR"
 
+log_step "Installing Linearis (Linear CLI)..."
+if ! has_cmd linearis; then
+    npm install -g linearis
+fi
+
+if [[ -n "${LINEAR_API_TOKEN:-}" ]]; then
+    log_step "Configuring Linearis..."
+    echo "$LINEAR_API_TOKEN" > "$USER_HOME/.linear_api_token"
+    chmod 600 "$USER_HOME/.linear_api_token"
+    chown "$CURRENT_USER:$CURRENT_USER" "$USER_HOME/.linear_api_token"
+    log_success "Linearis configured with API token"
+else
+    log_info "LINEAR_API_TOKEN not set - configure later with: echo 'token' > ~/.linear_api_token"
+fi
+
 log_success "AI tools installed"
 log_info "Run 'just auth' to authenticate with Claude and OpenCode"
