@@ -43,7 +43,7 @@ install:
     echo ""
     echo "Next steps:"
     echo "  1. Reconnect via Tailscale:"
-    echo "     mosh $(tailscale ip -4 2>/dev/null || echo '<tailscale-ip>')@$(hostname)"
+    echo "     mosh $(whoami)@$(tailscale ip -4 2>/dev/null || echo '<tailscale-ip>')"
     echo ""
     echo "  2. Run authentication:"
     echo "     just auth"
