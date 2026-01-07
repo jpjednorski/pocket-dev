@@ -17,11 +17,18 @@ if ! has_cmd claude; then
     npm install -g @anthropic-ai/claude-code
 fi
 
-log_step "Installing OpenCode (oh-my-opencode)..."
+log_step "Installing OpenCode..."
 export PATH="$USER_HOME/.opencode/bin:$PATH"
 if ! has_cmd opencode; then
     curl -fsSL https://opencode.ai/install | bash
 fi
+
+log_step "Installing oh-my-opencode plugin..."
+eval "$("$MISE_BIN" activate bash)"
+OMO_CLAUDE="${OMO_CLAUDE:-yes}"
+OMO_CHATGPT="${OMO_CHATGPT:-no}"
+OMO_GEMINI="${OMO_GEMINI:-no}"
+bunx oh-my-opencode install --no-tui --claude="$OMO_CLAUDE" --chatgpt="$OMO_CHATGPT" --gemini="$OMO_GEMINI"
 
 log_step "Configuring Claude hooks..."
 CLAUDE_DIR="$USER_HOME/.claude"
