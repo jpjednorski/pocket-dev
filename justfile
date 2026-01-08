@@ -85,6 +85,43 @@ tools:
 test-notify:
     @./scripts/commands/test-notify.sh
 
+# Setup notification hooks for Claude Code and OpenCode
+setup-hooks:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cd "{{ justfile_directory() }}"
+    source scripts/lib/common.sh
+    
+    log_section "Notification Hooks"
+    
+    USER_HOME="$HOME"
+    
+    log_step "Configuring Claude Code hooks..."
+    mkdir -p "$USER_HOME/.claude/hooks"
+    cp dotfiles/.claude/settings.json "$USER_HOME/.claude/"
+    cp dotfiles/.claude/hooks/notify.sh "$USER_HOME/.claude/hooks/"
+    chmod +x "$USER_HOME/.claude/hooks/notify.sh"
+    log_success "Claude hooks installed"
+    
+    log_step "Configuring OpenCode hooks..."
+    mkdir -p "$USER_HOME/.config/opencode/plugin"
+    cp dotfiles/.config/opencode/plugin/*.js "$USER_HOME/.config/opencode/plugin/" 2>/dev/null || true
+    log_success "OpenCode plugin installed"
+    
+    if [[ -f "$USER_HOME/.pocket-dev.env" ]]; then
+        source "$USER_HOME/.pocket-dev.env"
+        if [[ -n "${NTFY_TOPIC:-}" ]]; then
+            log_success "NTFY_TOPIC configured: $NTFY_TOPIC"
+        else
+            log_warn "NTFY_TOPIC not set in ~/.pocket-dev.env"
+        fi
+    else
+        log_warn "~/.pocket-dev.env not found - run 'just install' first or create manually"
+    fi
+    
+    echo ""
+    log_info "Test with: just test-notify"
+
 # ══════════════════════════════════════
 # MAINTENANCE
 # ══════════════════════════════════════

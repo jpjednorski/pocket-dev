@@ -41,9 +41,12 @@ chown -R "$CURRENT_USER:$CURRENT_USER" "$CLAUDE_DIR"
 
 log_step "Configuring OpenCode..."
 OPENCODE_DIR="$USER_HOME/.config/opencode"
-ensure_dir "$OPENCODE_DIR"
+ensure_dir "$OPENCODE_DIR/plugin"
 if [[ -f "$POCKET_DEV_DIR/dotfiles/.config/opencode/config.toml" ]]; then
     cp "$POCKET_DEV_DIR/dotfiles/.config/opencode/config.toml" "$OPENCODE_DIR/"
+fi
+if [[ -d "$POCKET_DEV_DIR/dotfiles/.config/opencode/plugin" ]]; then
+    cp "$POCKET_DEV_DIR/dotfiles/.config/opencode/plugin/"*.js "$OPENCODE_DIR/plugin/" 2>/dev/null || true
 fi
 chown -R "$CURRENT_USER:$CURRENT_USER" "$OPENCODE_DIR"
 
